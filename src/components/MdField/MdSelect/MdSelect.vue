@@ -74,14 +74,16 @@
       mdClass: String,
       multiple: Boolean,
       id: String,
-      name: String
+      name: String,
+	  mdOffsetX: Number,
+      mdOffsetY: Number,
     },
     inject: ['MdField'],
     data () {
       return {
         menuStyles: {},
         offset: {
-          x: defaultOffset.x,
+          x: this.mdOffsetX ? this.mdOffsetX : defaultOffset.x,
           y: 0
         },
         showSelect: true,
@@ -156,16 +158,8 @@
           if (menu) {
             const selected = target || menu.querySelector('.md-selected')
 
-            if (selected) {
-              this.scrollToSelectedOption(selected, menu)
-              this.offset.y = defaultOffset.y - selected.offsetTop + menu.scrollTop + 8
-              this.menuStyles = {
-                'transform-origin': `0 ${Math.abs(this.offset.y)}px`
-              }
-            } else {
-              this.offset.y = defaultOffset.y + 1
-              this.menuStyles = {}
-            }
+			this.offset.y = defaultOffset.y + 1 + (this.mdOffsetY ? this.mdOffsetY : 0)
+			this.menuStyles = {}
           }
         }
       },
