@@ -13,9 +13,9 @@
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
-      <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasFilteredItems" ref="menuContent">
-        <div class="md-autocomplete-items" v-if="hasFilteredItems">
-          <md-menu-item v-for="(item, index) in getOptions()" :key="index" @click="selectItem(item, $event)">
+      <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasItems" ref="menuContent">
+        <div class="md-autocomplete-items" v-if="hasItems">
+          <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
             <template v-else>{{ item }}</template>
           </md-menu-item>
@@ -77,7 +77,6 @@
         showMenu: false,
         triggerPopover: false,
         isPromisePending: false,
-        filteredAsyncOptions: []
       }
     },
     computed: {
@@ -94,89 +93,20 @@
           return 'md-autocomplete-box-content'
         }
       },
-      shouldFilter () {
-        return this.mdOptions[0] && this.searchTerm
-      },
-      filteredStaticOptions () {
-        if (this.isPromise(this.mdOptions)) {
-          return false
-        }
-
-        const firstItem = this.mdOptions[0]
-
-        if (this.shouldFilter) {
-          if (typeof firstItem === 'string') {
-            return this.filterByString()
-          } else if (typeof firstItem === 'object') {
-            return this.filterByObject()
-          }
-        }
-
-        return this.mdOptions
-      },
-      hasFilteredItems () {
-        return this.filteredStaticOptions.length > 0 || this.filteredAsyncOptions.length > 0
+      hasItems () {
+        return this.mdOptions.length > 0
       },
       hasScopedEmptySlot () {
         return this.$scopedSlots['md-autocomplete-empty']
       }
     },
     watch: {
-      mdOptions: {
-        deep: true,
-        immediate: true,
-        handler () {
-          if (this.isPromise(this.mdOptions)) {
-            this.isPromisePending = true
-            this.mdOptions.then(options => {
-              this.filteredAsyncOptions = options
-              this.isPromisePending = false
-            })
-          }
-        }
-      },
-
       value (val) {
         this.searchTerm = val
         if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
       }
     },
     methods: {
-      getOptions () {
-        if (this.isPromise(this.mdOptions)) {
-          return this.filteredAsyncOptions
-        }
-
-        return this.filteredStaticOptions
-      },
-      isPromise (obj) {
-        return isPromise(obj)
-      },
-      matchText (item) {
-        const target = item.toLowerCase()
-        const search = this.searchTerm.toLowerCase()
-
-        if (this.mdFuzzySearch) {
-          return fuzzy(search, target)
-        }
-
-        return target.includes(search)
-      },
-      filterByString () {
-        return this.mdOptions.filter(item => this.matchText(item))
-      },
-      filterByObject () {
-        return this.mdOptions.filter(item => {
-          const values = Object.values(item)
-          const valuesCount = values.length
-
-          for (let i = 0; i <= valuesCount; i++) {
-            if (typeof values[i] === 'string' && this.matchText(values[i])) {
-              return true
-            }
-          }
-        })
-      },
       openOnFocus () {
         if (this.mdOpenOnFocus) {
           this.showOptions()
