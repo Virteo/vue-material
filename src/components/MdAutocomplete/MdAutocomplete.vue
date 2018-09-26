@@ -14,10 +14,6 @@
         @click.stop.prevent="openOnFocus" />
 
       <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasFilteredItems">
-        <div class="md-autocomplete-loading" v-if="isPromisePending">
-          <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
-        </div>
-
         <div class="md-autocomplete-items" v-if="hasFilteredItems">
           <md-menu-item v-for="(item, index) in getOptions()" :key="index" @click="selectItem(item, $event)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
