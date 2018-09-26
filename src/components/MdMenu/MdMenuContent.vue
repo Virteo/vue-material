@@ -120,16 +120,11 @@
         }
       },
       setInitialHighlightIndex () {
-        this.setHighlightItems()
-        this.highlightItems.forEach((item, index) => {
-          if (item.classList.contains('md-selected')) {
-            this.highlightIndex = index - 1
-          }
-        })
+        this.highlightIndex = -1
       },
       setHighlightItems () {
-        if (this.$el.querySelectorAll) {
-          const items = this.$el.querySelectorAll('.md-list-item-container:not(.md-list-item-default):not([disabled])')
+        if (this.$refs.container) {
+          const items = this.$refs.container.querySelectorAll('.md-list-item-container:not(.md-list-item-default):not([disabled])')
 
           this.highlightItems = Array.from(items)
         }
