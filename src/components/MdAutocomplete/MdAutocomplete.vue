@@ -13,7 +13,7 @@
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
-      <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasFilteredItems">
+      <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasFilteredItems" ref="menuContent">
         <div class="md-autocomplete-items" v-if="hasFilteredItems">
           <md-menu-item v-for="(item, index) in getOptions()" :key="index" @click="selectItem(item, $event)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
@@ -138,6 +138,7 @@
 
       value (val) {
         this.searchTerm = val
+        if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
       }
     },
     methods: {
