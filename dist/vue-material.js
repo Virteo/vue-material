@@ -3476,13 +3476,18 @@ exports.default = {
   watch: {
     value: function value(val) {
       this.searchTerm = val;
-      if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
+      if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex(-1);
     },
     mdOptions: function mdOptions(val) {
       this.fixPopperBug(val);
     }
   },
   methods: {
+    listItemHover: function listItemHover(index) {
+      this.$refs.menuContent.setInitialHighlightIndex(index);
+      this.$refs.menuContent.clearAllHighlights();
+      this.$refs.menuContent.setItemHighlight();
+    },
     openOnFocus: function openOnFocus() {
       if (this.mdOpenOnFocus) {
         this.showOptions();
@@ -9073,8 +9078,8 @@ exports.default = new _MdComponent2.default({
         }
       };
     },
-    setInitialHighlightIndex: function setInitialHighlightIndex() {
-      this.highlightIndex = -1;
+    setInitialHighlightIndex: function setInitialHighlightIndex(index) {
+      this.highlightIndex = index;
     },
     setHighlightItems: function setHighlightItems() {
       if (this.$refs.container) {
@@ -15918,6 +15923,9 @@ var render = function() {
                           on: {
                             click: function($event) {
                               _vm.selectItem(item, $event)
+                            },
+                            mouseover: function($event) {
+                              _vm.listItemHover(index)
                             }
                           }
                         },
