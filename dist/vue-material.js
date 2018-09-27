@@ -3476,7 +3476,7 @@ exports.default = {
   watch: {
     value: function value(val) {
       this.searchTerm = val;
-      if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex(-1);
+      if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
     },
     mdOptions: function mdOptions(val) {
       this.fixPopperBug(val);
@@ -3484,9 +3484,7 @@ exports.default = {
   },
   methods: {
     listItemHover: function listItemHover(index) {
-      this.$refs.menuContent.setInitialHighlightIndex(index);
-      this.$refs.menuContent.clearAllHighlights();
-      this.$refs.menuContent.setItemHighlight();
+      this.$refs.menuContent.setHighlightIndex(index);
     },
     openOnFocus: function openOnFocus() {
       if (this.mdOpenOnFocus) {
@@ -9078,8 +9076,8 @@ exports.default = new _MdComponent2.default({
         }
       };
     },
-    setInitialHighlightIndex: function setInitialHighlightIndex(index) {
-      this.highlightIndex = index;
+    setInitialHighlightIndex: function setInitialHighlightIndex() {
+      this.highlightIndex = -1;
     },
     setHighlightItems: function setHighlightItems() {
       if (this.$refs.container) {
@@ -9106,6 +9104,13 @@ exports.default = new _MdComponent2.default({
           }
         }
 
+        this.clearAllHighlights();
+        this.setItemHighlight();
+      }
+    },
+    setHighlightIndex: function setHighlightIndex(index) {
+      if (index != this.highlightIndex) {
+        this.highlightIndex = index;
         this.clearAllHighlights();
         this.setItemHighlight();
       }
@@ -15925,6 +15930,9 @@ var render = function() {
                               _vm.selectItem(item, $event)
                             },
                             mouseover: function($event) {
+                              _vm.listItemHover(index)
+                            },
+                            mousemove: function($event) {
                               _vm.listItemHover(index)
                             }
                           }

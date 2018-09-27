@@ -119,8 +119,8 @@
           }
         }
       },
-      setInitialHighlightIndex (index) {
-        this.highlightIndex = index
+      setInitialHighlightIndex () {
+        this.highlightIndex = -1
       },
       setHighlightItems () {
         if (this.$refs.container) {
@@ -147,6 +147,13 @@
             }
           }
 
+          this.clearAllHighlights()
+          this.setItemHighlight()
+        }
+      },
+      setHighlightIndex (index) {
+        if(index != this.highlightIndex){
+          this.highlightIndex = index
           this.clearAllHighlights()
           this.setItemHighlight()
         }

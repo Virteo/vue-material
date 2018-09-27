@@ -15,7 +15,7 @@
 
       <md-menu-content :class="contentClasses" v-show="hasItems" ref="menuContent">
         <div class="md-autocomplete-items" v-if="hasItems">
-          <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)" @mouseover="listItemHover(index)">
+          <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)" @mouseover="listItemHover(index)" @mousemove="listItemHover(index)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
             <template v-else>{{ item }}</template>
           </md-menu-item>
@@ -97,7 +97,7 @@
     watch: {
       value (val) {
         this.searchTerm = val
-        if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex(-1);
+        if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
       },
       mdOptions (val) {
         this.fixPopperBug(val);
@@ -105,9 +105,7 @@
     },
     methods: {
       listItemHover(index) {
-        this.$refs.menuContent.setInitialHighlightIndex(index)
-        this.$refs.menuContent.clearAllHighlights()
-        this.$refs.menuContent.setItemHighlight()
+        this.$refs.menuContent.setHighlightIndex(index)
       },
       openOnFocus () {
         if (this.mdOpenOnFocus) {
