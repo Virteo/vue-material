@@ -9078,6 +9078,8 @@ exports.default = new _MdComponent2.default({
     },
     setInitialHighlightIndex: function setInitialHighlightIndex() {
       this.highlightIndex = -1;
+      this.setHighlightItems();
+      this.clearAllHighlights();
     },
     setHighlightItems: function setHighlightItems() {
       if (this.$refs.container) {
@@ -9091,13 +9093,13 @@ exports.default = new _MdComponent2.default({
 
       if (this.highlightItems.length) {
         if (direction === 'down') {
-          if (this.highlightIndex === this.highlightItems.length - 1) {
+          if (this.highlightIndex >= this.highlightItems.length - 1) {
             this.highlightIndex = 0;
           } else {
             this.highlightIndex++;
           }
         } else {
-          if (this.highlightIndex === 0) {
+          if (this.highlightIndex <= 0) {
             this.highlightIndex = this.highlightItems.length - 1;
           } else {
             this.highlightIndex--;
