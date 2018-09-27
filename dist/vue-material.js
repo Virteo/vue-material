@@ -3370,13 +3370,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
 //
 //
 //
@@ -3416,9 +3410,9 @@ var _fuzzysearch = __webpack_require__(212);
 
 var _fuzzysearch2 = _interopRequireDefault(_fuzzysearch);
 
-var _isPromise2 = __webpack_require__(213);
+var _isPromise = __webpack_require__(213);
 
-var _isPromise3 = _interopRequireDefault(_isPromise2);
+var _isPromise2 = _interopRequireDefault(_isPromise);
 
 var _MdPropValidator = __webpack_require__(4);
 
@@ -3460,8 +3454,7 @@ exports.default = {
       searchTerm: this.value,
       showMenu: false,
       triggerPopover: false,
-      isPromisePending: false,
-      filteredAsyncOptions: []
+      isPromisePending: false
     };
   },
 
@@ -3479,96 +3472,20 @@ exports.default = {
         return 'md-autocomplete-box-content';
       }
     },
-    shouldFilter: function shouldFilter() {
-      return this.mdOptions[0] && this.searchTerm;
-    },
-    filteredStaticOptions: function filteredStaticOptions() {
-      if (this.isPromise(this.mdOptions)) {
-        return false;
-      }
-
-      var firstItem = this.mdOptions[0];
-
-      if (this.shouldFilter) {
-        if (typeof firstItem === 'string') {
-          return this.filterByString();
-        } else if ((typeof firstItem === 'undefined' ? 'undefined' : _typeof(firstItem)) === 'object') {
-          return this.filterByObject();
-        }
-      }
-
-      return this.mdOptions;
-    },
-    hasFilteredItems: function hasFilteredItems() {
-      return this.filteredStaticOptions.length > 0 || this.filteredAsyncOptions.length > 0;
+    hasItems: function hasItems() {
+      return this.mdOptions.length > 0;
     },
     hasScopedEmptySlot: function hasScopedEmptySlot() {
       return this.$scopedSlots['md-autocomplete-empty'];
     }
   },
   watch: {
-    mdOptions: {
-      deep: true,
-      immediate: true,
-      handler: function handler() {
-        var _this = this;
-
-        if (this.isPromise(this.mdOptions)) {
-          this.isPromisePending = true;
-          this.mdOptions.then(function (options) {
-            _this.filteredAsyncOptions = options;
-            _this.isPromisePending = false;
-          });
-        }
-      }
-    },
-
     value: function value(val) {
       this.searchTerm = val;
+      if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
     }
   },
   methods: {
-    getOptions: function getOptions() {
-      if (this.isPromise(this.mdOptions)) {
-        return this.filteredAsyncOptions;
-      }
-
-      return this.filteredStaticOptions;
-    },
-    isPromise: function isPromise(obj) {
-      return (0, _isPromise3.default)(obj);
-    },
-    matchText: function matchText(item) {
-      var target = item.toLowerCase();
-      var search = this.searchTerm.toLowerCase();
-
-      if (this.mdFuzzySearch) {
-        return (0, _fuzzysearch2.default)(search, target);
-      }
-
-      return target.includes(search);
-    },
-    filterByString: function filterByString() {
-      var _this2 = this;
-
-      return this.mdOptions.filter(function (item) {
-        return _this2.matchText(item);
-      });
-    },
-    filterByObject: function filterByObject() {
-      var _this3 = this;
-
-      return this.mdOptions.filter(function (item) {
-        var values = Object.values(item);
-        var valuesCount = values.length;
-
-        for (var i = 0; i <= valuesCount; i++) {
-          if (typeof values[i] === 'string' && _this3.matchText(values[i])) {
-            return true;
-          }
-        }
-      });
-    },
     openOnFocus: function openOnFocus() {
       if (this.mdOpenOnFocus) {
         this.showOptions();
@@ -3586,7 +3503,7 @@ exports.default = {
       }
     },
     showOptions: function showOptions() {
-      var _this4 = this;
+      var _this = this;
 
       if (this.showMenu) {
         return false;
@@ -3594,16 +3511,16 @@ exports.default = {
 
       this.showMenu = true;
       this.$nextTick(function () {
-        _this4.triggerPopover = true;
-        _this4.$emit('md-opened');
+        _this.triggerPopover = true;
+        _this.$emit('md-opened');
       });
     },
     hideOptions: function hideOptions() {
-      var _this5 = this;
+      var _this2 = this;
 
       this.$nextTick(function () {
-        _this5.triggerPopover = false;
-        _this5.$emit('md-closed');
+        _this2.triggerPopover = false;
+        _this2.$emit('md-closed');
       });
     },
     selectItem: function selectItem(item, $event) {
@@ -9145,18 +9062,11 @@ exports.default = new _MdComponent2.default({
       };
     },
     setInitialHighlightIndex: function setInitialHighlightIndex() {
-      var _this2 = this;
-
-      this.setHighlightItems();
-      this.highlightItems.forEach(function (item, index) {
-        if (item.classList.contains('md-selected')) {
-          _this2.highlightIndex = index - 1;
-        }
-      });
+      this.highlightIndex = -1;
     },
     setHighlightItems: function setHighlightItems() {
-      if (this.$el.querySelectorAll) {
-        var items = this.$el.querySelectorAll('.md-list-item-container:not(.md-list-item-default):not([disabled])');
+      if (this.$refs.container) {
+        var items = this.$refs.container.querySelectorAll('.md-list-item-container:not(.md-list-item-default):not([disabled])');
 
         this.highlightItems = Array.from(items);
       }
@@ -9239,17 +9149,17 @@ exports.default = new _MdComponent2.default({
       return !this.$el.contains($event.target) && !this.isMenu($event);
     },
     createClickEventObserver: function createClickEventObserver() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (document) {
         this.MdMenu.bodyClickObserver = new _MdObserveEvent2.default(document.body, 'click', function ($event) {
           $event.stopPropagation();
 
-          if (!_this3.isMenu($event) && (_this3.MdMenu.closeOnClick || _this3.isBackdropExpectMenu($event))) {
-            _this3.MdMenu.active = false;
-            _this3.MdMenu.bodyClickObserver.destroy();
-            _this3.MdMenu.windowResizeObserver.destroy();
-            _this3.destroyKeyDownListener();
+          if (!_this2.isMenu($event) && (_this2.MdMenu.closeOnClick || _this2.isBackdropExpectMenu($event))) {
+            _this2.MdMenu.active = false;
+            _this2.MdMenu.bodyClickObserver.destroy();
+            _this2.MdMenu.windowResizeObserver.destroy();
+            _this2.destroyKeyDownListener();
           }
         });
       }
@@ -9312,13 +9222,13 @@ exports.default = new _MdComponent2.default({
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this3 = this;
 
     this.$nextTick().then(function () {
-      _this4.setHighlightItems();
-      _this4.setupWatchers();
-      _this4.setStyles();
-      _this4.didMount = true;
+      _this3.setHighlightItems();
+      _this3.setupWatchers();
+      _this3.setStyles();
+      _this3.didMount = true;
     });
   },
   beforeDestroy: function beforeDestroy() {
@@ -15976,35 +15886,19 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.hasScopedEmptySlot || _vm.hasFilteredItems,
-                  expression: "hasScopedEmptySlot || hasFilteredItems"
+                  value: _vm.hasScopedEmptySlot || _vm.hasItems,
+                  expression: "hasScopedEmptySlot || hasItems"
                 }
               ],
+              ref: "menuContent",
               class: _vm.contentClasses
             },
             [
-              _vm.isPromisePending
-                ? _c(
-                    "div",
-                    { staticClass: "md-autocomplete-loading" },
-                    [
-                      _c("md-progress-spinner", {
-                        attrs: {
-                          "md-diameter": 40,
-                          "md-stroke": 4,
-                          "md-mode": "indeterminate"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.hasFilteredItems
+              _vm.hasItems
                 ? _c(
                     "div",
                     { staticClass: "md-autocomplete-items" },
-                    _vm._l(_vm.getOptions(), function(item, index) {
+                    _vm._l(_vm.mdOptions, function(item, index) {
                       return _c(
                         "md-menu-item",
                         {
