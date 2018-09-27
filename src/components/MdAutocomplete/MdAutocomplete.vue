@@ -98,13 +98,31 @@
       value (val) {
         this.searchTerm = val
         if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
-      }
+      },
+      mdOptions (val) {
+        this.fixPopperBug();
+      } 
     },
     methods: {
       openOnFocus () {
         if (this.mdOpenOnFocus) {
           this.showOptions()
         }
+      },
+      fixPopperBug (){
+        this.$nextTick(() => {
+          if(this.$refs.menuContent.$el.style) {
+            if(this.$refs.menuContent.$el.style.display == "none") {
+              console.log("doing something")
+              this.$refs.menuContent.$el.style.display = "flex"
+            }
+          } else {
+            this.$nextTick(() => {
+              console.log("doing something2")
+              this.fixPopperBug();
+            })
+          }
+        })
       },
       onInput (value) {
         this.$emit('input', value)
