@@ -130,13 +130,11 @@
 
         this.showMenu = true
         this.$nextTick(() => {
-          this.triggerPopover = true
           this.$emit('md-opened')
         })
       },
       hideOptions () {
         this.$nextTick(() => {
-          this.triggerPopover = false
           this.$emit('md-closed')
         })
       },
