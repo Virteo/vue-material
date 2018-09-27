@@ -13,19 +13,13 @@
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
-      <md-menu-content :class="contentClasses" v-show="hasScopedEmptySlot || hasItems" ref="menuContent">
+      <md-menu-content :class="contentClasses" v-show="hasItems" ref="menuContent">
         <div class="md-autocomplete-items" v-if="hasItems">
           <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
             <template v-else>{{ item }}</template>
           </md-menu-item>
         </div>
-
-        <md-menu-item v-else-if="hasScopedEmptySlot">
-          <div class="md-autocomplete-empty">
-            <slot name="md-autocomplete-empty" :term="searchTerm" />
-          </div>
-        </md-menu-item>
       </md-menu-content>
     </md-menu>
 
