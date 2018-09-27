@@ -3399,12 +3399,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 var _fuzzysearch = __webpack_require__(212);
 
@@ -3483,6 +3477,9 @@ exports.default = {
     value: function value(val) {
       this.searchTerm = val;
       if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
+    },
+    mdOptions: function mdOptions(val) {
+      this.fixPopperBug();
     }
   },
   methods: {
@@ -3490,6 +3487,23 @@ exports.default = {
       if (this.mdOpenOnFocus) {
         this.showOptions();
       }
+    },
+    fixPopperBug: function fixPopperBug() {
+      var _this = this;
+
+      this.$nextTick(function () {
+        if (_this.$refs.menuContent.$el.style) {
+          if (_this.$refs.menuContent.$el.style.display == "none") {
+            console.log("doing something");
+            _this.$refs.menuContent.$el.style.display = "flex";
+          }
+        } else {
+          _this.$nextTick(function () {
+            console.log("doing something2");
+            _this.fixPopperBug();
+          });
+        }
+      });
     },
     onInput: function onInput(value) {
       this.$emit('input', value);
@@ -3503,7 +3517,7 @@ exports.default = {
       }
     },
     showOptions: function showOptions() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.showMenu) {
         return false;
@@ -3511,16 +3525,14 @@ exports.default = {
 
       this.showMenu = true;
       this.$nextTick(function () {
-        _this.triggerPopover = true;
-        _this.$emit('md-opened');
+        _this2.$emit('md-opened');
       });
     },
     hideOptions: function hideOptions() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$nextTick(function () {
-        _this2.triggerPopover = false;
-        _this2.$emit('md-closed');
+        _this3.$emit('md-closed');
       });
     },
     selectItem: function selectItem(item, $event) {
@@ -15886,8 +15898,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.hasScopedEmptySlot || _vm.hasItems,
-                  expression: "hasScopedEmptySlot || hasItems"
+                  value: _vm.hasItems,
+                  expression: "hasItems"
                 }
               ],
               ref: "menuContent",
@@ -15921,22 +15933,8 @@ var render = function() {
                       )
                     })
                   )
-                : _vm.hasScopedEmptySlot
-                  ? _c("md-menu-item", [
-                      _c(
-                        "div",
-                        { staticClass: "md-autocomplete-empty" },
-                        [
-                          _vm._t("md-autocomplete-empty", null, {
-                            term: _vm.searchTerm
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  : _vm._e()
-            ],
-            1
+                : _vm._e()
+            ]
           )
         ],
         1
