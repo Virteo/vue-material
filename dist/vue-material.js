@@ -9111,6 +9111,7 @@ exports.default = new _MdComponent2.default({
     setHighlightIndex: function setHighlightIndex(index) {
       if (index != this.highlightIndex) {
         this.highlightIndex = index;
+        this.setHighlightItems();
         this.clearAllHighlights();
         this.setItemHighlight();
       }

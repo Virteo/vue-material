@@ -154,6 +154,7 @@
       setHighlightIndex (index) {
         if(index != this.highlightIndex){
           this.highlightIndex = index
+          this.setHighlightItems()
           this.clearAllHighlights()
           this.setItemHighlight()
         }
