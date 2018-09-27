@@ -3479,7 +3479,7 @@ exports.default = {
       if (this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
     },
     mdOptions: function mdOptions(val) {
-      this.fixPopperBug();
+      this.fixPopperBug(val);
     }
   },
   methods: {
@@ -3488,22 +3488,22 @@ exports.default = {
         this.showOptions();
       }
     },
-    fixPopperBug: function fixPopperBug() {
+    fixPopperBug: function fixPopperBug(val) {
       var _this = this;
 
-      this.$nextTick(function () {
-        if (_this.$refs.menuContent.$el.style) {
-          if (_this.$refs.menuContent.$el.style.display == "none") {
-            console.log("doing something");
-            _this.$refs.menuContent.$el.style.display = "flex";
+      if (val.length > 0) {
+        this.$nextTick(function () {
+          if (_this.$refs.menuContent.$el.style) {
+            if (_this.$refs.menuContent.$el.style.display == "none") {
+              _this.$refs.menuContent.$el.style.display = "flex";
+            }
+          } else {
+            _this.$nextTick(function () {
+              _this.fixPopperBug();
+            });
           }
-        } else {
-          _this.$nextTick(function () {
-            console.log("doing something2");
-            _this.fixPopperBug();
-          });
-        }
-      });
+        });
+      }
     },
     onInput: function onInput(value) {
       this.$emit('input', value);

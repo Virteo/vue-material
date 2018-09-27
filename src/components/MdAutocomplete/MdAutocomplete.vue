@@ -100,7 +100,7 @@
         if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
       },
       mdOptions (val) {
-        this.fixPopperBug();
+        this.fixPopperBug(val);
       } 
     },
     methods: {
@@ -109,20 +109,20 @@
           this.showOptions()
         }
       },
-      fixPopperBug (){
-        this.$nextTick(() => {
-          if(this.$refs.menuContent.$el.style) {
-            if(this.$refs.menuContent.$el.style.display == "none") {
-              console.log("doing something")
-              this.$refs.menuContent.$el.style.display = "flex"
+      fixPopperBug (val){
+        if(val.length > 0){
+          this.$nextTick(() => {
+            if(this.$refs.menuContent.$el.style) {
+              if(this.$refs.menuContent.$el.style.display == "none") {
+                this.$refs.menuContent.$el.style.display = "flex"
+              }
+            } else {
+              this.$nextTick(() => {
+                this.fixPopperBug();
+              })
             }
-          } else {
-            this.$nextTick(() => {
-              console.log("doing something2")
-              this.fixPopperBug();
-            })
-          }
-        })
+          })
+        }
       },
       onInput (value) {
         this.$emit('input', value)
