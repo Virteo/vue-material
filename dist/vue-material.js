@@ -9114,8 +9114,10 @@ exports.default = new _MdComponent2.default({
       if (index != this.highlightIndex) {
         this.highlightIndex = index;
         this.setHighlightItems();
-        this.clearAllHighlights();
-        this.setItemHighlight();
+        if (this.highlightItems) {
+          this.clearAllHighlights();
+          this.setItemHighlight();
+        }
       }
     },
     clearAllHighlights: function clearAllHighlights() {
