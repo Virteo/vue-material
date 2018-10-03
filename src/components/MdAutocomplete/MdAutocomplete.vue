@@ -13,7 +13,7 @@
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
-      <md-menu-content :class="contentClasses" v-show="hasItems" ref="menuContent">
+      <md-menu-content :class="contentClasses" ref="menuContent">
         <div class="md-autocomplete-items" v-if="hasItems">
           <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)" @mouseover="listItemHover(index)" @mousemove="listItemHover(index)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
@@ -83,9 +83,14 @@
         }
       },
       contentClasses () {
+        var classes = "";
         if (this.isBoxLayout) {
-          return 'md-autocomplete-box-content'
+          classes += 'md-autocomplete-box-content '
         }
+        if(!this.hasItems) {
+          classes += 'no-items'
+        }
+        return classes;
       },
       hasItems () {
         return this.mdOptions.length > 0
@@ -245,5 +250,11 @@
     z-index: 120;
     border-bottom: 1px solid;
     content: "";
+  }
+  .md-menu-content-bottom-start.md-menu-content.no-items {
+    box-shadow: none;
+    .md-list {
+      padding: 0;
+    }
   }
 </style>

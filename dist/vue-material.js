@@ -3462,9 +3462,14 @@ exports.default = {
       }
     },
     contentClasses: function contentClasses() {
+      var classes = "";
       if (this.isBoxLayout) {
-        return 'md-autocomplete-box-content';
+        classes += 'md-autocomplete-box-content ';
       }
+      if (!this.hasItems) {
+        classes += 'no-items';
+      }
+      return classes;
     },
     hasItems: function hasItems() {
       return this.mdOptions.length > 0;
@@ -15908,18 +15913,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "md-menu-content",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.hasItems,
-                  expression: "hasItems"
-                }
-              ],
-              ref: "menuContent",
-              class: _vm.contentClasses
-            },
+            { ref: "menuContent", class: _vm.contentClasses },
             [
               _vm.hasItems
                 ? _c(
