@@ -9078,10 +9078,8 @@ exports.default = new _MdComponent2.default({
     },
     setInitialHighlightIndex: function setInitialHighlightIndex() {
       this.highlightIndex = -1;
-      if (this.highlightItems) {
-        this.setHighlightItems();
-        this.clearAllHighlights();
-      }
+      this.setHighlightItems();
+      this.clearAllHighlights();
     },
     setHighlightItems: function setHighlightItems() {
       if (this.$refs.container) {
@@ -9116,15 +9114,15 @@ exports.default = new _MdComponent2.default({
       if (index != this.highlightIndex) {
         this.highlightIndex = index;
         this.setHighlightItems();
-        if (this.highlightItems) {
-          this.clearAllHighlights();
-          this.setItemHighlight();
-        }
+        this.clearAllHighlights();
+        this.setItemHighlight();
       }
     },
     clearAllHighlights: function clearAllHighlights() {
       this.highlightItems.forEach(function (item) {
-        item.parentNode.__vue__.highlighted = false;
+        if (item.parentNode.__vue__) {
+          item.parentNode.__vue__.highlighted = false;
+        }
       });
     },
     setItemHighlight: function setItemHighlight() {

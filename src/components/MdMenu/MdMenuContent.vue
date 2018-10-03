@@ -121,10 +121,8 @@
       },
       setInitialHighlightIndex () {
         this.highlightIndex = -1
-        if(this.highlightItems) {
-          this.setHighlightItems()
-          this.clearAllHighlights()
-        }
+        this.setHighlightItems()
+        this.clearAllHighlights()
       },
       setHighlightItems () {
         if (this.$refs.container) {
@@ -159,15 +157,15 @@
         if(index != this.highlightIndex){
           this.highlightIndex = index
           this.setHighlightItems()
-          if(this.highlightItems) {
-            this.clearAllHighlights()
-            this.setItemHighlight()
-          }
+          this.clearAllHighlights()
+          this.setItemHighlight()
         }
       },
       clearAllHighlights () {
         this.highlightItems.forEach(item => {
-          item.parentNode.__vue__.highlighted = false
+          if(item.parentNode.__vue__){
+            item.parentNode.__vue__.highlighted = false
+          }
         })
       },
       setItemHighlight () {
