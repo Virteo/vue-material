@@ -9078,8 +9078,10 @@ exports.default = new _MdComponent2.default({
     },
     setInitialHighlightIndex: function setInitialHighlightIndex() {
       this.highlightIndex = -1;
-      this.setHighlightItems();
-      this.clearAllHighlights();
+      if (this.highlightItems) {
+        this.setHighlightItems();
+        this.clearAllHighlights();
+      }
     },
     setHighlightItems: function setHighlightItems() {
       if (this.$refs.container) {
