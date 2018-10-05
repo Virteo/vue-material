@@ -71,6 +71,7 @@
         showMenu: false,
         triggerPopover: false,
         isPromisePending: false,
+        ignoreNextInput: false,
       }
     },
     computed: {
@@ -136,14 +137,15 @@
       },
       onInput (value) {
         this.$emit('input', value)
-
-        if (!this.mdOpenOnFocus) {
+        
+        if (!this.ignoreNextInput) {
           this.showOptions()
         }
 
         if (this.searchTerm.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
           this.$emit('md-changed', this.searchTerm)
         }
+        this.ignoreNextInput = false;
       },
       showOptions () {
         if (this.showMenu) {
@@ -162,7 +164,7 @@
       },
       selectItem (item, $event) {
         const content = $event.target.textContent.trim()
-
+        this.ignoreNextInput = true;
         this.searchTerm = content
         this.$emit('input', item)
         this.$emit('md-selected', item)

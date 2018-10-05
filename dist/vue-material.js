@@ -3448,7 +3448,8 @@ exports.default = {
       searchTerm: this.value,
       showMenu: false,
       triggerPopover: false,
-      isPromisePending: false
+      isPromisePending: false,
+      ignoreNextInput: false
     };
   },
 
@@ -3518,13 +3519,14 @@ exports.default = {
     onInput: function onInput(value) {
       this.$emit('input', value);
 
-      if (!this.mdOpenOnFocus) {
+      if (!this.ignoreNextInput) {
         this.showOptions();
       }
 
       if (this.searchTerm.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
         this.$emit('md-changed', this.searchTerm);
       }
+      this.ignoreNextInput = false;
     },
     showOptions: function showOptions() {
       var _this2 = this;
@@ -3547,7 +3549,7 @@ exports.default = {
     },
     selectItem: function selectItem(item, $event) {
       var content = $event.target.textContent.trim();
-
+      this.ignoreNextInput = true;
       this.searchTerm = content;
       this.$emit('input', item);
       this.$emit('md-selected', item);
