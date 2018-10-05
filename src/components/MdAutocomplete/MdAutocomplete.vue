@@ -126,7 +126,7 @@
               }
             } else {
               this.$nextTick(() => {
-                this.fixPopperBug();
+                this.fixPopperBug(val);
               })
             }
           })

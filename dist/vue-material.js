@@ -3507,7 +3507,7 @@ exports.default = {
             }
           } else {
             _this.$nextTick(function () {
-              _this.fixPopperBug();
+              _this.fixPopperBug(val);
             });
           }
         });
@@ -9132,9 +9132,11 @@ exports.default = new _MdComponent2.default({
     },
     setItemHighlight: function setItemHighlight() {
       if (this.highlightedItem) {
-        this.highlightedItem.parentNode.__vue__.highlighted = true;
-        if (this.$parent.$parent.setOffsets) {
-          this.$parent.$parent.setOffsets(this.highlightedItem.parentNode);
+        if (this.highlightedItem.parentNode.__vue__) {
+          this.highlightedItem.parentNode.__vue__.highlighted = true;
+          if (this.$parent.$parent.setOffsets) {
+            this.$parent.$parent.setOffsets(this.highlightedItem.parentNode);
+          }
         }
       }
     },
