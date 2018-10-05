@@ -118,18 +118,20 @@
         }
       },
       fixPopperBug (val){
-        if(val.length > 0){
-          this.$nextTick(() => {
-            if(this.$refs.menuContent.$el.style) {
-              if(this.$refs.menuContent.$el.style.display == "none") {
-                this.$refs.menuContent.$el.style.display = "flex"
+        if (this.showMenu) {
+          if(val.length > 0){
+            this.$nextTick(() => {
+              if(this.$refs.menuContent.$el.style) {
+                if(this.$refs.menuContent.$el.style.display == "none") {
+                  this.$refs.menuContent.$el.style.display = "flex"
+                }
+              } else {
+                this.$nextTick(() => {
+                  this.fixPopperBug(val);
+                })
               }
-            } else {
-              this.$nextTick(() => {
-                this.fixPopperBug(val);
-              })
-            }
-          })
+            })
+          }
         }
       },
       onInput (value) {

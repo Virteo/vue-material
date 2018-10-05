@@ -3499,18 +3499,20 @@ exports.default = {
     fixPopperBug: function fixPopperBug(val) {
       var _this = this;
 
-      if (val.length > 0) {
-        this.$nextTick(function () {
-          if (_this.$refs.menuContent.$el.style) {
-            if (_this.$refs.menuContent.$el.style.display == "none") {
-              _this.$refs.menuContent.$el.style.display = "flex";
+      if (this.showMenu) {
+        if (val.length > 0) {
+          this.$nextTick(function () {
+            if (_this.$refs.menuContent.$el.style) {
+              if (_this.$refs.menuContent.$el.style.display == "none") {
+                _this.$refs.menuContent.$el.style.display = "flex";
+              }
+            } else {
+              _this.$nextTick(function () {
+                _this.fixPopperBug(val);
+              });
             }
-          } else {
-            _this.$nextTick(function () {
-              _this.fixPopperBug(val);
-            });
-          }
-        });
+          });
+        }
       }
     },
     onInput: function onInput(value) {
