@@ -163,9 +163,8 @@
         })
       },
       selectItem (item, $event) {
-        const content = $event.target.textContent.trim()
         this.ignoreNextInput = true;
-        this.searchTerm = content
+        this.searchTerm = item
         this.$emit('input', item)
         this.$emit('md-selected', item)
         this.hideOptions()
