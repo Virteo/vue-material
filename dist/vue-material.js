@@ -3544,6 +3544,7 @@ exports.default = {
       var _this3 = this;
 
       this.$nextTick(function () {
+        _this3.showMenu = false;
         _this3.$emit('md-closed');
       });
     },
@@ -9220,10 +9221,7 @@ exports.default = new _MdComponent2.default({
           break;
 
         case 'Enter':
-          this.setSelection();
-          break;
-
-        case 'Space':
+          event.preventDefault();
           this.setSelection();
           break;
 

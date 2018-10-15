@@ -245,10 +245,7 @@
           break
 
         case 'Enter':
-          this.setSelection()
-          break
-
-        case 'Space':
+          event.preventDefault()
           this.setSelection()
           break
 

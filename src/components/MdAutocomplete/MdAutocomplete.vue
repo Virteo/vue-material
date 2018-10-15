@@ -159,6 +159,7 @@
       },
       hideOptions () {
         this.$nextTick(() => {
+          this.showMenu = false
           this.$emit('md-closed')
         })
       },
