@@ -9,7 +9,7 @@
         :maxlength="mdInputMaxlength"
         :placeholder="mdInputPlaceholder"
         @focus.stop="openOnFocus"
-        @blur="hideOptions"
+        @blur="onBlur"
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
@@ -146,6 +146,12 @@
           this.$emit('md-changed', this.searchTerm)
         }
         this.ignoreNextInput = false;
+      },
+      onBlur(ev){
+        this.hideOptions();
+        this.$nextTick(() => {
+          this.$emit('blur', ev)
+        })
       },
       showOptions () {
         if (this.showMenu) {

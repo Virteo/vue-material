@@ -3528,8 +3528,16 @@ exports.default = {
       }
       this.ignoreNextInput = false;
     },
-    showOptions: function showOptions() {
+    onBlur: function onBlur(ev) {
       var _this2 = this;
+
+      this.hideOptions();
+      this.$nextTick(function () {
+        _this2.$emit('blur', ev);
+      });
+    },
+    showOptions: function showOptions() {
+      var _this3 = this;
 
       if (this.showMenu) {
         return false;
@@ -3537,15 +3545,15 @@ exports.default = {
 
       this.showMenu = true;
       this.$nextTick(function () {
-        _this2.$emit('md-opened');
+        _this3.$emit('md-opened');
       });
     },
     hideOptions: function hideOptions() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$nextTick(function () {
-        _this3.showMenu = false;
-        _this3.$emit('md-closed');
+        _this4.showMenu = false;
+        _this4.$emit('md-closed');
       });
     },
     selectItem: function selectItem(item, $event) {
@@ -15892,7 +15900,7 @@ var render = function() {
                     $event.stopPropagation()
                     return _vm.openOnFocus($event)
                   },
-                  blur: _vm.hideOptions,
+                  blur: _vm.onBlur,
                   input: _vm.onInput,
                   click: function($event) {
                     $event.stopPropagation()
