@@ -5850,6 +5850,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _MdComponent = __webpack_require__(1);
 
@@ -5879,6 +5880,10 @@ exports.default = new _MdComponent2.default({
     type: {
       type: String,
       default: 'text'
+    },
+    autocomplete: {
+      type: [String, Boolean],
+      default: false
     }
   },
   computed: {
@@ -18517,7 +18522,7 @@ var render = function() {
                 }
               ],
               staticClass: "md-input",
-              attrs: { type: "checkbox" },
+              attrs: { autocomplete: _vm.autocomplete, type: "checkbox" },
               domProps: {
                 checked: Array.isArray(_vm.model)
                   ? _vm._i(_vm.model, null) > -1
@@ -18569,7 +18574,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "md-input",
-                attrs: { type: "radio" },
+                attrs: { autocomplete: _vm.autocomplete, type: "radio" },
                 domProps: { checked: _vm._q(_vm.model, null) },
                 on: {
                   focus: _vm.onFocus,
@@ -18600,7 +18605,10 @@ var render = function() {
                   }
                 ],
                 staticClass: "md-input",
-                attrs: { type: _vm.attributes.type },
+                attrs: {
+                  autocomplete: _vm.autocomplete,
+                  type: _vm.attributes.type
+                },
                 domProps: { value: _vm.model },
                 on: {
                   focus: _vm.onFocus,

@@ -5,7 +5,8 @@
     v-bind="attributes"
     v-on="listeners"
     @focus="onFocus"
-    @blur="onBlur">
+    @blur="onBlur"
+    :autocomplete="autocomplete">
 </template>
 
 <script>
@@ -25,6 +26,10 @@
       type: {
         type: String,
         default: 'text'
+      },
+      autocomplete: {
+        type: [String, Boolean],
+        default: false
       }
     },
     computed: {
