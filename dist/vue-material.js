@@ -3399,6 +3399,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _fuzzysearch = __webpack_require__(212);
 
@@ -3420,6 +3421,10 @@ exports.default = {
     value: {
       type: null,
       required: true
+    },
+    autocomplete: {
+      type: [String, Boolean],
+      default: false
     },
     mdDense: Boolean,
     mdLayout: _extends({
@@ -15898,7 +15903,8 @@ var render = function() {
                   id: _vm.mdInputId,
                   name: _vm.mdInputName,
                   maxlength: _vm.mdInputMaxlength,
-                  placeholder: _vm.mdInputPlaceholder
+                  placeholder: _vm.mdInputPlaceholder,
+                  autocomplete: _vm.autocomplete
                 },
                 on: {
                   focus: function($event) {

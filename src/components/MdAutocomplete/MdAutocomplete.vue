@@ -8,6 +8,7 @@
         :name="mdInputName"
         :maxlength="mdInputMaxlength"
         :placeholder="mdInputPlaceholder"
+        :autocomplete="autocomplete"
         @focus.stop="openOnFocus"
         @blur="onBlur"
         @input="onInput"
@@ -38,6 +39,10 @@
       value: {
         type: null,
         required: true
+      },
+      autocomplete: {
+        type: [String, Boolean],
+        default: false
       },
       mdDense: Boolean,
       mdLayout: {
