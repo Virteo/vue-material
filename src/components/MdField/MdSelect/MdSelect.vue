@@ -86,7 +86,7 @@
           x: this.mdOffsetX ? this.mdOffsetX : defaultOffset.x,
           y: 0
         },
-        showSelect: true,
+        showSelect: false,
         didMount: false,
         MdSelect: {
           items: {},
@@ -287,7 +287,6 @@
       }
     },
     mounted () {
-      this.showSelect = false
       this.setFieldContent()
 
       this.$nextTick().then(() => {

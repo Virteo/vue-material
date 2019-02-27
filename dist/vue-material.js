@@ -1,6 +1,6 @@
 /*!
  * vue-material v1.0.0-beta-10.2
- * Made with <3 by marcosmoura 2018
+ * Made with <3 by marcosmoura 2019
  * Released under the MIT License.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -8433,7 +8433,7 @@ exports.default = {
         x: this.mdOffsetX ? this.mdOffsetX : defaultOffset.x,
         y: 0
       },
-      showSelect: true,
+      showSelect: false,
       didMount: false,
       MdSelect: {
         items: {},
@@ -8637,7 +8637,6 @@ exports.default = {
   mounted: function mounted() {
     var _this2 = this;
 
-    this.showSelect = false;
     this.setFieldContent();
 
     this.$nextTick().then(function () {
