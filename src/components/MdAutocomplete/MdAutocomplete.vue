@@ -175,8 +175,6 @@
         })
       },
       selectItem (item, $event) {
-        this.ignoreNextInput = true;
-        this.searchTerm = item
         this.$emit('md-selected', item)
         this.hideOptions()
       }
