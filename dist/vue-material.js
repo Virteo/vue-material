@@ -1255,7 +1255,7 @@ exports.default = {
       set: function set(value) {
         var _this = this;
 
-        if (value.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
+        if (value === null || value.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
           this.$nextTick(function () {
             _this.localValue = value;
           });
