@@ -1,9 +1,9 @@
 <template>
   <transition name="md-progress-bar" appear>
     <div class="md-progress-bar" :class="[progressClasses, $mdActiveTheme]">
-      <div class="md-progress-bar-track" :style="progressTrackStyle"></div>
-      <div class="md-progress-bar-fill" :style="progressValueStyle"></div>
-      <div class="md-progress-bar-buffer" :Style="progressBufferStyle"></div>
+      <div class="md-progress-bar-track" ref="track"></div>
+      <div class="md-progress-bar-fill" ref="fill"></div>
+      <div class="md-progress-bar-buffer" ref="buffer"></div>
     </div>
   </transition>
 </template>
@@ -61,6 +61,31 @@
         if (this.hasAmountFill) {
           return `left: calc(${this.mdBuffer}% + 8px)`
         }
+      }
+    },
+    mounted(){
+      this.updateValue();
+      this.updateBuffer();
+    },
+    methods: {
+      updateValue(){
+        if (this.hasAmountFill) {
+          this.$refs.fill.style.width = `${this.mdValue}%`
+        }
+      },
+      updateBuffer(){
+        if (this.hasAmountFill) {
+          this.$refs.track.style.width = `${this.mdBuffer}%`
+          this.$refs.buffer.style.left = `$calc(${this.mdBuffer}% + 8px)`
+        }
+      }
+    },
+    watch: {
+      mdValue(){
+        this.updateValue();
+      },
+      mdBuffer() {
+        this.updateBuffer();
       }
     }
   })

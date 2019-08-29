@@ -10851,6 +10851,32 @@ exports.default = new _MdComponent2.default({
         return 'left: calc(' + this.mdBuffer + '% + 8px)';
       }
     }
+  },
+  mounted: function mounted() {
+    this.updateValue();
+    this.updateBuffer();
+  },
+
+  methods: {
+    updateValue: function updateValue() {
+      if (this.hasAmountFill) {
+        this.$refs.fill.style.width = this.mdValue + '%';
+      }
+    },
+    updateBuffer: function updateBuffer() {
+      if (this.hasAmountFill) {
+        this.$refs.track.style.width = this.mdBuffer + '%';
+        this.$refs.buffer.style.left = '$calc(' + this.mdBuffer + '% + 8px)';
+      }
+    }
+  },
+  watch: {
+    mdValue: function mdValue() {
+      this.updateValue();
+    },
+    mdBuffer: function mdBuffer() {
+      this.updateBuffer();
+    }
   }
 });
 
@@ -30621,20 +30647,11 @@ var render = function() {
         class: [_vm.progressClasses, _vm.$mdActiveTheme]
       },
       [
-        _c("div", {
-          staticClass: "md-progress-bar-track",
-          style: _vm.progressTrackStyle
-        }),
+        _c("div", { ref: "track", staticClass: "md-progress-bar-track" }),
         _vm._v(" "),
-        _c("div", {
-          staticClass: "md-progress-bar-fill",
-          style: _vm.progressValueStyle
-        }),
+        _c("div", { ref: "fill", staticClass: "md-progress-bar-fill" }),
         _vm._v(" "),
-        _c("div", {
-          staticClass: "md-progress-bar-buffer",
-          attrs: { Style: _vm.progressBufferStyle }
-        })
+        _c("div", { ref: "buffer", staticClass: "md-progress-bar-buffer" })
       ]
     )
   ])
