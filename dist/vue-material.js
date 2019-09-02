@@ -3733,7 +3733,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; //
 //
 //
 //
@@ -3801,10 +3803,10 @@ exports.default = new _MdComponent2.default({
   },
   watch: {
     mdActive: function mdActive(active) {
-      var isBoolean = typeof active === 'boolean';
-      var isEvent = active.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent';
+      var isBooleanOrObject = typeof active === 'boolean' || (typeof active === 'undefined' ? 'undefined' : _typeof(active)) === 'object';
+      var isEvent = active.constructor.toString().match(/(function|object) (\w*)/)[2].toLowerCase() === 'mouseevent';
 
-      if (isBoolean && this.mdCentered && active) {
+      if (isBooleanOrObject && this.mdCentered && active) {
         this.startRipple({
           type: 'mousedown'
         });
