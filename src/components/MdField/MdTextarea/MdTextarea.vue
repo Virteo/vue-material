@@ -44,6 +44,10 @@
         type: String,
         default: () => 'md-textarea-' + MdUuid()
       },
+      defaultHeight: {
+        type: Number,
+        default: 32
+      },
       mdAutogrow: Boolean
     },
     computed: {
@@ -78,7 +82,7 @@
       },
       applyStyles () {
         if (this.mdAutogrow) {
-          this.setTextAreaSize(32)
+          this.setTextAreaSize(this.defaultHeight)
           this.$nextTick().then(() => {
             this.setTextAreaSize()
             window.setTimeout(() => {

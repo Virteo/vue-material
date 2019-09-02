@@ -9838,6 +9838,10 @@ exports.default = new _MdComponent2.default({
         return 'md-textarea-' + (0, _MdUuid2.default)();
       }
     },
+    defaultHeight: {
+      type: Number,
+      default: 32
+    },
     mdAutogrow: Boolean
   },
   computed: {
@@ -9873,7 +9877,7 @@ exports.default = new _MdComponent2.default({
       var _this = this;
 
       if (this.mdAutogrow) {
-        this.setTextAreaSize(32);
+        this.setTextAreaSize(this.defaultHeight);
         this.$nextTick().then(function () {
           _this.setTextAreaSize();
           window.setTimeout(function () {
