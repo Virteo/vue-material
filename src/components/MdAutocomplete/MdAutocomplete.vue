@@ -109,9 +109,6 @@
       value (val) {
         this.searchTerm = val
         if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
-      },
-      mdOptions (val) {
-        this.fixPopperBug(val);
       } 
     },
     methods: {
@@ -121,23 +118,6 @@
       openOnFocus () {
         if (this.mdOpenOnFocus) {
           this.showOptions()
-        }
-      },
-      fixPopperBug (val){
-        if (this.showMenu) {
-          if(val.length > 0){
-            this.$nextTick(() => {
-              if(this.$refs.menuContent.$el.style) {
-                if(this.$refs.menuContent.$el.style.display == "none") {
-                  this.$refs.menuContent.$el.style.display = "flex"
-                }
-              } else {
-                this.$nextTick(() => {
-                  this.fixPopperBug(val);
-                })
-              }
-            })
-          }
         }
       },
       onInput (value) {
