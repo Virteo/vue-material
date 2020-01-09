@@ -21,7 +21,8 @@ export default {
         return this.localValue
       },
       set (value) {
-        if (value === null || value.constructor.toString().match(/(function|object) (\w*)/)[2].toLowerCase() !== 'inputevent') {
+        if (value === null || value.constructor.toString().match(/(function|object) (\w*)/) === null
+        || value.constructor.toString().match(/(function|object) (\w*)/)[2].toLowerCase() !== 'inputevent') {
           this.$nextTick(() => {
             this.localValue = value
           })
