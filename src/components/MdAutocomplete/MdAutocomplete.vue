@@ -41,8 +41,8 @@
         required: true
       },
       autocomplete: {
-        type: [String, Boolean],
-        default: false
+        type: String,
+        default: "off"
       },
       mdDense: Boolean,
       mdLayout: {

@@ -28,8 +28,8 @@
         default: 'text'
       },
       autocomplete: {
-        type: [String, Boolean],
-        default: false
+        type: String,
+        default: "off"
       }
     },
     computed: {

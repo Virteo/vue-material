@@ -5,6 +5,7 @@
     <input
       class="md-input"
       readonly
+      autocomplete="off"
       v-model="model"
       v-bind="{ disabled, required, placeholder }"
       @click="openPicker"

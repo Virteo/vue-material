@@ -13,6 +13,7 @@
       v-model="MdSelect.label"
       ref="input"
       readonly
+      :autocomplete="off"
       :disabled="disabled"
       :required="required"
       :placeholder="placeholder"
@@ -41,7 +42,7 @@
       <slot />
     </div>
 
-    <input class="md-input-fake" v-model="model" :disabled="disabled" readonly tabindex="-1" />
+    <input class="md-input-fake" v-model="model" :disabled="disabled" autocomplete="off" readonly tabindex="-1" />
     <select readonly v-model="model" v-bind="attributes" tabindex="-1"></select>
   </md-menu>
 </template>

@@ -2,6 +2,7 @@
   <textarea
     class="md-textarea"
     :style="textareaStyles"
+    autocomplete="off"
     v-model="model"
     v-bind="attributes"
     v-on="listeners"
