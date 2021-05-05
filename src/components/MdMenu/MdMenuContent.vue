@@ -5,7 +5,7 @@
         :class="[menuClasses, mdContentClass, $mdActiveTheme]"
         :style="menuStyles"
         ref="menu">
-        <div class="md-menu-content-container md-scrollbar" :class="$mdActiveTheme" ref="container">
+        <div class="md-menu-content-container" v-bar :class="$mdActiveTheme" ref="container">
           <md-list :class="listClasses" v-bind="filteredAttrs">
             <slot />
           </md-list>
