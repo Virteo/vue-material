@@ -14,8 +14,8 @@
         @input="onInput"
         @click.stop.prevent="openOnFocus" />
 
-      <md-menu-content :class="contentClasses" ref="menuContent">
-        <div class="md-autocomplete-items" v-if="hasItems">
+      <md-menu-content :class="contentClasses" ref="menuContent" style="z-index: 9999;">
+        <div class="md-autocomplete-items" v-if="hasItems" :style="[maxListHeight !== '' ? {'max-height': `${maxListHeight}`}: {}]">
           <md-menu-item v-for="(item, index) in mdOptions" :key="index" @click="selectItem(item, $event)" @mouseover="listItemHover(index)" @mousemove="listItemHover(index)">
             <slot name="md-autocomplete-item" :item="item" :term="searchTerm" v-if="$scopedSlots['md-autocomplete-item']" />
             <template v-else>{{ item }}</template>
@@ -68,7 +68,11 @@
       mdInputName: String,
       mdInputId: String,
       mdInputMaxlength: [String, Number],
-      mdInputPlaceholder: [String, Number]
+      mdInputPlaceholder: [String, Number],
+      maxListHeight: {
+        type: String,
+        default: ''
+      }
     },
     data () {
       return {
@@ -109,7 +113,7 @@
       value (val) {
         this.searchTerm = val
         if(this.$refs.menuContent) this.$refs.menuContent.setInitialHighlightIndex();
-      } 
+      }
     },
     methods: {
       listItemHover(index) {
@@ -122,7 +126,7 @@
       },
       onInput (value) {
         this.$emit('input', value)
-        
+
         if (!this.ignoreNextInput) {
           this.showOptions()
         }
@@ -168,6 +172,8 @@
   @import "~components/MdLayout/mixins";
 
   .md-autocomplete {
+    z-index: 9999;
+
     .md-menu {
       width: 100%;
       display: flex;

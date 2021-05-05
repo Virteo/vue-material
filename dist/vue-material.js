@@ -3446,7 +3446,11 @@ exports.default = {
     mdInputName: String,
     mdInputId: String,
     mdInputMaxlength: [String, Number],
-    mdInputPlaceholder: [String, Number]
+    mdInputPlaceholder: [String, Number],
+    maxListHeight: {
+      type: String,
+      default: ''
+    }
   },
   data: function data() {
     return {
@@ -15944,12 +15948,23 @@ var render = function() {
           _vm._v(" "),
           _c(
             "md-menu-content",
-            { ref: "menuContent", class: _vm.contentClasses },
+            {
+              ref: "menuContent",
+              class: _vm.contentClasses,
+              staticStyle: { "z-index": "9999" }
+            },
             [
               _vm.hasItems
                 ? _c(
                     "div",
-                    { staticClass: "md-autocomplete-items" },
+                    {
+                      staticClass: "md-autocomplete-items",
+                      style: [
+                        _vm.maxListHeight !== ""
+                          ? { "max-height": "" + _vm.maxListHeight }
+                          : {}
+                      ]
+                    },
                     _vm._l(_vm.mdOptions, function(item, index) {
                       return _c(
                         "md-menu-item",
@@ -28436,8 +28451,9 @@ var render = function() {
                   _c(
                     "div",
                     {
+                      directives: [{ name: "bar", rawName: "v-bar" }],
                       ref: "container",
-                      staticClass: "md-menu-content-container md-scrollbar",
+                      staticClass: "md-menu-content-container",
                       class: _vm.$mdActiveTheme
                     },
                     [
