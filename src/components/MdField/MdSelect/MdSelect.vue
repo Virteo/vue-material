@@ -13,7 +13,7 @@
       v-model="MdSelect.label"
       ref="input"
       readonly
-      :autocomplete="off"
+      autocomplete="off"
       :disabled="disabled"
       :required="required"
       :placeholder="placeholder"
