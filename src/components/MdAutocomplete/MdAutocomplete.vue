@@ -4,6 +4,7 @@
       <md-input
         v-model="searchTerm"
         v-bind="$attrs"
+        ref="autocompleteinput"
         :id="mdInputId"
         :name="mdInputName"
         :maxlength="mdInputMaxlength"
@@ -116,6 +117,9 @@
       }
     },
     methods: {
+      focus() {
+        this.$refs.autocompleteinput.$el.focus();
+      },
       listItemHover(index) {
         this.$refs.menuContent.setHighlightIndex(index)
       },

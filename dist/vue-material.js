@@ -3400,6 +3400,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _fuzzysearch = __webpack_require__(212);
 
@@ -3495,6 +3496,9 @@ exports.default = {
     }
   },
   methods: {
+    focus: function focus() {
+      this.$refs.autocompleteinput.$el.focus();
+    },
     listItemHover: function listItemHover(index) {
       this.$refs.menuContent.setHighlightIndex(index);
     },
@@ -15912,6 +15916,7 @@ var render = function() {
             "md-input",
             _vm._b(
               {
+                ref: "autocompleteinput",
                 attrs: {
                   id: _vm.mdInputId,
                   name: _vm.mdInputName,
